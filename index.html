@@ -1,163 +1,228 @@
-```html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagens dos Cultos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Imagens dos Cultos</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            color: #111827;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        header {
-            background: #111827;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
 
-        header h1 {
-            margin: 0;
-        }
+header {
+    background: #111827;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
 
-        main {
-            width: min(1100px, 94%);
-            margin: 30px auto;
-        }
+header h1 {
+    margin: 0;
+}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 20px #0001;
-        }
+header p {
+    opacity: .75;
+}
 
-        .login {
-            max-width: 430px;
-            margin: 70px auto;
-        }
+main {
+    width: min(1100px, 94%);
+    margin: 30px auto;
+}
 
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            margin: 8px 0 14px;
-            font-size: 16px;
-        }
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px #0001;
+}
 
-        button {
-            border: 0;
-            border-radius: 10px;
-            padding: 13px 18px;
-            background: #2563eb;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.login {
+    max-width: 430px;
+    margin: 70px auto;
+}
 
-        button:hover {
-            background: #1d4ed8;
-        }
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    margin: 8px 0 14px;
+    font-size: 16px;
+}
 
-        .upload {
-            border: 2px dashed #9ca3af;
-            border-radius: 14px;
-            padding: 35px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
+button {
+    border: 0;
+    border-radius: 10px;
+    padding: 13px 18px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .upload:hover {
-            border-color: #2563eb;
-            background: #f8fafc;
-        }
+button:hover {
+    background: #1d4ed8;
+}
 
-        .upload input {
-            display: none;
-        }
+button.danger {
+    background: #dc2626;
+}
 
-        .hidden {
-            display: none;
-        }
+button.danger:hover {
+    background: #b91c1c;
+}
 
-        .status {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 10px;
-            background: #eef2ff;
-        }
+button.gray {
+    background: #4b5563;
+}
 
-        .files {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 18px;
-        }
+.upload {
+    border: 2px dashed #9ca3af;
+    border-radius: 14px;
+    padding: 35px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
 
-        .file {
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            overflow: hidden;
-            background: white;
-        }
+.upload:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+}
 
-        .preview {
-            height: 160px;
-            background: #111827;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-        }
+.upload input {
+    display: none;
+}
 
-        .preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.hidden {
+    display: none !important;
+}
 
-        .info {
-            padding: 14px;
-        }
+.status {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #eef2ff;
+}
 
-        .name {
-            font-weight: bold;
-            word-break: break-word;
-        }
+.status.ok {
+    background: #dcfce7;
+    color: #166534;
+}
 
-        .empty {
-            padding: 35px;
-            text-align: center;
-            color: #6b7280;
-        }
+.status.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
 
-        .top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
+.files {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+}
 
-        @media (max-width: 600px) {
-            .top {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
-    </style>
+.file {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    background: white;
+}
+
+.preview {
+    height: 170px;
+    background: #111827;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-icon {
+    font-size: 55px;
+}
+
+.info {
+    padding: 14px;
+}
+
+.name {
+    font-weight: bold;
+    word-break: break-word;
+}
+
+.date {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 13px;
+}
+
+.actions button {
+    flex: 1;
+    font-size: 13px;
+}
+
+.empty {
+    padding: 35px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+    display: none;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #2563eb;
+    transition: width .2s;
+}
+
+@media (max-width: 600px) {
+    .top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -169,390 +234,743 @@
 
 <main>
 
-    <!-- LOGIN -->
-    <section id="login" class="card login">
+<!-- LOGIN -->
 
-        <h2>🔐 Entrar</h2>
+<section id="loginCard" class="card login">
 
-        <p>Digite a senha para acessar os arquivos.</p>
+    <h2>🔐 Entrar</h2>
 
-        <input
-            id="senha"
-            type="password"
-            placeholder="Senha"
-            autocomplete="off"
-        >
+    <p>Digite a senha para acessar os arquivos.</p>
 
-        <button onclick="entrar()" style="width:100%;">
-            Entrar
-        </button>
+    <input
+        id="senha"
+        type="password"
+        placeholder="Senha"
+        autocomplete="off"
+    >
 
-        <div id="loginStatus"></div>
+    <button
+        id="loginButton"
+        onclick="entrar()"
+        style="width:100%;"
+    >
+        Entrar
+    </button>
 
-    </section>
+    <div id="loginStatus"></div>
 
-
-    <!-- PAINEL -->
-    <section id="painel" class="hidden">
-
-        <!-- UPLOAD -->
-        <div class="card">
-
-            <h2>📤 Enviar foto ou vídeo</h2>
-
-            <label class="upload">
-                <input
-                    id="arquivo"
-                    type="file"
-                    accept="image/*,video/*"
-                    onchange="selecionarArquivo()"
-                >
-
-                <strong>📷 Clique para escolher um arquivo</strong>
-
-                <div id="nomeArquivo">
-                    Nenhum arquivo selecionado
-                </div>
-            </label>
-
-            <button onclick="enviar()">
-                ☁️ Enviar
-            </button>
-
-            <div id="uploadStatus"></div>
-
-        </div>
+</section>
 
 
-        <!-- LISTA -->
-        <div class="card">
+<!-- PAINEL -->
 
-            <div class="top">
-                <div>
-                    <h2>📂 Imagens_Cultos</h2>
-                    <span id="contador">0 arquivos</span>
-                </div>
+<section id="painel" class="hidden">
 
-                <button onclick="carregarArquivos()">
-                    🔄 Atualizar
-                </button>
-            </div>
+    <!-- UPLOAD -->
 
-            <br>
+    <div class="card">
+
+        <h2>📤 Enviar foto ou vídeo</h2>
+
+        <p>
+            O arquivo será enviado diretamente para:
+            <strong>Imagens_Cultos</strong>
+        </p>
+
+        <label class="upload">
 
             <input
-                id="pesquisa"
-                type="text"
-                placeholder="🔎 Pesquisar arquivo..."
-                oninput="pesquisar()"
+                id="arquivo"
+                type="file"
+                accept="image/*,video/*"
+                onchange="selecionarArquivo()"
             >
 
-            <div id="lista" class="files">
-                <div class="empty">
-                    Nenhum arquivo carregado.
-                </div>
+            <strong>📷 Clique para selecionar</strong>
+
+            <div id="nomeArquivo">
+                Nenhum arquivo selecionado
             </div>
+
+        </label>
+
+        <button
+            id="uploadButton"
+            onclick="enviar()"
+        >
+            ☁️ Enviar para o Drive
+        </button>
+
+        <div class="progress" id="progress">
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+        </div>
+
+        <div id="uploadStatus"></div>
+
+    </div>
+
+
+    <!-- ARQUIVOS -->
+
+    <div class="card">
+
+        <div class="top">
+
+            <div>
+                <h2>📂 Imagens_Cultos</h2>
+                <span id="contador">
+                    Carregando...
+                </span>
+            </div>
+
+            <button
+                class="gray"
+                onclick="carregarArquivos()"
+            >
+                🔄 Atualizar
+            </button>
 
         </div>
 
-    </section>
+        <input
+            id="pesquisa"
+            type="text"
+            placeholder="🔎 Pesquisar..."
+            oninput="pesquisar()"
+        >
+
+        <div
+            id="lista"
+            class="files"
+        >
+            <div class="empty">
+                Carregando...
+            </div>
+        </div>
+
+    </div>
+
+</section>
 
 </main>
 
 
-<script type="module">
+<script>
 
-    import {
-        initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzKKQF6bfNQbvqMHTjwkqhdKmBA6VpRJ8n24cXi2afnSuOEKLET8gqyKRsscv1S2_ScNA/exec";
 
 
-    // ==============================
-    // FIREBASE
-    // ==============================
+let senhaAtual = "";
+let arquivosAtuais = [];
 
-    const firebaseConfig = {
 
-        apiKey:
-            "AIzaSyDzJ81mwMCPzm3uTtBzdTp21HS6j7LeNTU",
+// ========================================
+// LOGIN
+// ========================================
 
-        authDomain:
-            "app1-c2a28.firebaseapp.com",
+async function entrar() {
 
-        projectId:
-            "app1-c2a28",
+    const senha =
+        document.getElementById("senha").value.trim();
 
-        storageBucket:
-            "app1-c2a28.firebasestorage.app",
+    const status =
+        document.getElementById("loginStatus");
 
-        messagingSenderId:
-            "1079561193142",
+    if (!senha) {
 
-        appId:
-            "1:1079561193142:web:863f4fb724509a23ae4817"
-    };
+        mostrarStatus(
+            status,
+            "Digite a senha.",
+            false
+        );
 
-
-    const app = initializeApp(firebaseConfig);
-
-
-    // ==============================
-    // LOGIN
-    // ==============================
-
-    window.entrar = function () {
-
-        const senha =
-            document.getElementById("senha").value;
-
-        const status =
-            document.getElementById("loginStatus");
-
-
-        /*
-         * A senha real NÃO deve ficar aqui.
-         *
-         * Depois vamos conectar:
-         *
-         * GitHub Pages
-         *       ↓
-         * Firebase
-         *       ↓
-         * validação segura
-         */
-
-
-        if (!senha) {
-
-            status.innerHTML =
-                "<div class='status'>Digite a senha.</div>";
-
-            return;
-        }
-
-
-        /*
-         * TEMPORÁRIO:
-         *
-         * Isso serve somente para testar a página.
-         *
-         * Trocaremos por autenticação segura.
-         */
-
-        if (senha === "1234") {
-
-            document
-                .getElementById("login")
-                .classList.add("hidden");
-
-            document
-                .getElementById("painel")
-                .classList.remove("hidden");
-
-            carregarArquivos();
-
-        } else {
-
-            status.innerHTML =
-                "<div class='status'>Senha incorreta.</div>";
-        }
-    };
-
-
-    // ==============================
-    // SELEÇÃO
-    // ==============================
-
-    window.selecionarArquivo = function () {
-
-        const input =
-            document.getElementById("arquivo");
-
-        const nome =
-            document.getElementById("nomeArquivo");
-
-
-        if (!input.files.length) {
-
-            nome.textContent =
-                "Nenhum arquivo selecionado";
-
-            return;
-        }
-
-
-        nome.textContent =
-            input.files[0].name;
-    };
-
-
-    // ==============================
-    // ENVIO
-    // ==============================
-
-    window.enviar = function () {
-
-        const input =
-            document.getElementById("arquivo");
-
-        const status =
-            document.getElementById("uploadStatus");
-
-
-        if (!input.files.length) {
-
-            status.innerHTML =
-                "<div class='status'>Escolha uma foto ou vídeo.</div>";
-
-            return;
-        }
-
-
-        const arquivo = input.files[0];
-
-
-        /*
-         * FLUXO REAL:
-         *
-         * 1. Receber arquivo
-         * 2. Mandar para o Google Drive
-         * 3. Pasta: Imagens_Cultos
-         * 4. Confirmar envio
-         * 5. Apagar cópia temporária
-         * 6. Atualizar lista
-         */
-
-
-        status.innerHTML = `
-            <div class="status">
-                ⏳ Preparando ${arquivo.name}...
-                <br><br>
-                A conexão com o Google Drive ainda será adicionada.
-            </div>
-        `;
-    };
-
-
-    // ==============================
-    // ARQUIVOS
-    // ==============================
-
-    let arquivos = [];
-
-
-    window.carregarArquivos = function () {
-
-        /*
-         * Aqui vamos consultar o Google Drive
-         * e obter os arquivos existentes
-         * dentro da pasta Imagens_Cultos.
-         */
-
-
-        arquivos = [];
-
-
-        mostrarArquivos();
-    };
-
-
-    function mostrarArquivos() {
-
-        const lista =
-            document.getElementById("lista");
-
-        const contador =
-            document.getElementById("contador");
-
-
-        contador.textContent =
-            `${arquivos.length} arquivos`;
-
-
-        if (!arquivos.length) {
-
-            lista.innerHTML = `
-                <div class="empty">
-                    📂 Nenhum arquivo encontrado.
-                    <br><br>
-                    A lista será preenchida pelo Google Drive.
-                </div>
-            `;
-
-            return;
-        }
-
-
-        lista.innerHTML = "";
-
-
-        arquivos.forEach(arquivo => {
-
-            const item =
-                document.createElement("div");
-
-            item.className = "file";
-
-
-            item.innerHTML = `
-
-                <div class="preview">
-                    ${arquivo.tipo === "imagem"
-                        ? `<img src="${arquivo.url}">`
-                        : "🎥"
-                    }
-                </div>
-
-                <div class="info">
-
-                    <div class="name">
-                        ${arquivo.nome}
-                    </div>
-
-                </div>
-            `;
-
-
-            lista.appendChild(item);
-        });
+        return;
     }
 
+    const botao =
+        document.getElementById("loginButton");
 
-    // ==============================
-    // PESQUISA
-    // ==============================
+    botao.disabled = true;
+    botao.textContent = "Entrando...";
 
-    window.pesquisar = function () {
+    try {
 
-        const termo =
+        const resposta =
+            await api({
+                acao: "login",
+                senha: senha
+            });
+
+        if (!resposta.ok) {
+
+            mostrarStatus(
+                status,
+                "Senha incorreta.",
+                false
+            );
+
+            return;
+        }
+
+        senhaAtual = senha;
+
+        document
+            .getElementById("loginCard")
+            .classList.add("hidden");
+
+        document
+            .getElementById("painel")
+            .classList.remove("hidden");
+
+        await carregarArquivos();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mostrarStatus(
+            status,
+            "Não foi possível conectar ao servidor.",
+            false
+        );
+
+    } finally {
+
+        botao.disabled = false;
+        botao.textContent = "Entrar";
+    }
+}
+
+
+// ========================================
+// API
+// ========================================
+
+async function api(dados) {
+
+    const resposta = await fetch(
+        API_URL,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify(dados)
+        }
+    );
+
+    if (!resposta.ok) {
+        throw new Error(
+            "HTTP " + resposta.status
+        );
+    }
+
+    return await resposta.json();
+}
+
+
+// ========================================
+// SELECIONAR
+// ========================================
+
+function selecionarArquivo() {
+
+    const input =
+        document.getElementById("arquivo");
+
+    const nome =
+        document.getElementById("nomeArquivo");
+
+    if (!input.files.length) {
+
+        nome.textContent =
+            "Nenhum arquivo selecionado";
+
+        return;
+    }
+
+    const arquivo =
+        input.files[0];
+
+    nome.textContent =
+        arquivo.name +
+        " — " +
+        tamanho(arquivo.size);
+}
+
+
+// ========================================
+// UPLOAD
+// ========================================
+
+async function enviar() {
+
+    const input =
+        document.getElementById("arquivo");
+
+    const status =
+        document.getElementById("uploadStatus");
+
+    const botao =
+        document.getElementById("uploadButton");
+
+    if (!input.files.length) {
+
+        mostrarStatus(
+            status,
+            "Selecione uma foto ou vídeo.",
+            false
+        );
+
+        return;
+    }
+
+    const arquivo =
+        input.files[0];
+
+    botao.disabled = true;
+    botao.textContent = "Enviando...";
+
+    document
+        .getElementById("progress")
+        .style.display = "block";
+
+    document
+        .getElementById("progressBar")
+        .style.width = "20%";
+
+    try {
+
+        mostrarStatus(
+            status,
+            "Preparando arquivo...",
+            true
+        );
+
+        const base64 =
+            await arquivoParaBase64(arquivo);
+
+        document
+            .getElementById("progressBar")
+            .style.width = "60%";
+
+        const resposta =
+            await api({
+
+                acao: "upload",
+
+                senha: senhaAtual,
+
+                nome: arquivo.name,
+
+                mimeType: arquivo.type,
+
+                base64: base64
+            });
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                resposta.erro || "Falha no upload"
+            );
+        }
+
+        document
+            .getElementById("progressBar")
+            .style.width = "100%";
+
+        mostrarStatus(
+            status,
+            "✅ Arquivo enviado para Imagens_Cultos!",
+            true
+        );
+
+        input.value = "";
+
+        document
+            .getElementById("nomeArquivo")
+            .textContent =
+            "Nenhum arquivo selecionado";
+
+        await carregarArquivos();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mostrarStatus(
+            status,
+            "❌ Erro: " + erro.message,
+            false
+        );
+
+    } finally {
+
+        botao.disabled = false;
+        botao.textContent = "☁️ Enviar para o Drive";
+
+        setTimeout(() => {
+
             document
-                .getElementById("pesquisa")
-                .value
-                .toLowerCase();
+                .getElementById("progress")
+                .style.display = "none";
+
+        }, 800);
+    }
+}
 
 
-        const cards =
-            document.querySelectorAll(".file");
+// ========================================
+// CONVERTER ARQUIVO
+// ========================================
+
+function arquivoParaBase64(arquivo) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const leitor =
+                new FileReader();
+
+            leitor.onload = () => {
+
+                const resultado =
+                    leitor.result;
+
+                const base64 =
+                    resultado.split(",")[1];
+
+                resolve(base64);
+            };
+
+            leitor.onerror =
+                reject;
+
+            leitor.readAsDataURL(arquivo);
+        }
+    );
+}
 
 
-        cards.forEach(card => {
+// ========================================
+// LISTAR
+// ========================================
 
-            const nome =
-                card
-                    .querySelector(".name")
-                    ?.textContent
-                    .toLowerCase() || "";
+async function carregarArquivos() {
+
+    const lista =
+        document.getElementById("lista");
+
+    lista.innerHTML = `
+        <div class="empty">
+            🔄 Carregando arquivos...
+        </div>
+    `;
+
+    try {
+
+        const resposta =
+            await api({
+
+                acao: "listar",
+
+                senha: senhaAtual
+            });
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                resposta.erro
+            );
+        }
+
+        arquivosAtuais =
+            resposta.arquivos || [];
+
+        renderizarArquivos(
+            arquivosAtuais
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        lista.innerHTML = `
+            <div class="empty">
+                ❌ Não foi possível carregar os arquivos.
+                <br><br>
+                ${erro.message}
+            </div>
+        `;
+    }
+}
 
 
-            card.style.display =
-                nome.includes(termo)
-                    ? ""
-                    : "none";
-        });
-    };
+// ========================================
+// RENDER
+// ========================================
+
+function renderizarArquivos(arquivos) {
+
+    const lista =
+        document.getElementById("lista");
+
+    const contador =
+        document.getElementById("contador");
+
+    contador.textContent =
+        `${arquivos.length} arquivo(s)`;
+
+    if (!arquivos.length) {
+
+        lista.innerHTML = `
+            <div class="empty">
+                📂 A pasta Imagens_Cultos está vazia.
+            </div>
+        `;
+
+        return;
+    }
+
+    lista.innerHTML = "";
+
+    arquivos.forEach(arquivo => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "file";
+
+        const ehImagem =
+            arquivo.tipo === "imagem";
+
+        item.innerHTML = `
+
+            <div class="preview">
+
+                ${
+                    ehImagem
+                    ?
+                    `
+                    <div style="
+                        width:100%;
+                        height:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:50px;
+                    ">
+                        🖼️
+                    </div>
+                    `
+                    :
+                    `
+                    <div class="video-icon">
+                        🎥
+                    </div>
+                    `
+                }
+
+            </div>
+
+            <div class="info">
+
+                <div class="name">
+                    ${escapar(arquivo.nome)}
+                </div>
+
+                <div class="date">
+                    ${formatarData(arquivo.data)}
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        onclick="abrirArquivo('${arquivo.id}')"
+                    >
+                        Abrir
+                    </button>
+
+                    <button
+                        class="danger"
+                        onclick="excluir('${arquivo.id}')"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        lista.appendChild(item);
+    });
+}
+
+
+// ========================================
+// ABRIR
+// ========================================
+
+function abrirArquivo(id) {
+
+    const arquivo =
+        arquivosAtuais.find(
+            x => x.id === id
+        );
+
+    if (!arquivo) {
+        return;
+    }
+
+    window.open(
+        arquivo.url,
+        "_blank"
+    );
+}
+
+
+// ========================================
+// EXCLUIR
+// ========================================
+
+async function excluir(id) {
+
+    const arquivo =
+        arquivosAtuais.find(
+            x => x.id === id
+        );
+
+    if (!arquivo) {
+        return;
+    }
+
+    const confirmar =
+        confirm(
+            `Excluir "${arquivo.nome}" do Google Drive?`
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+
+        const resposta =
+            await api({
+
+                acao: "excluir",
+
+                senha: senhaAtual,
+
+                id: id
+            });
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                resposta.erro
+            );
+        }
+
+        await carregarArquivos();
+
+    } catch (erro) {
+
+        alert(
+            "Erro ao excluir: " +
+            erro.message
+        );
+    }
+}
+
+
+// ========================================
+// PESQUISA
+// ========================================
+
+function pesquisar() {
+
+    const termo =
+        document
+            .getElementById("pesquisa")
+            .value
+            .toLowerCase();
+
+    const filtrados =
+        arquivosAtuais.filter(
+            arquivo =>
+                arquivo.nome
+                    .toLowerCase()
+                    .includes(termo)
+        );
+
+    renderizarArquivos(
+        filtrados
+    );
+}
+
+
+// ========================================
+// UTILITÁRIOS
+// ========================================
+
+function mostrarStatus(
+    elemento,
+    mensagem,
+    sucesso
+) {
+
+    elemento.innerHTML =
+        `<div class="status ${sucesso ? "ok" : "error"}">
+            ${escapar(mensagem)}
+        </div>`;
+}
+
+
+function tamanho(bytes) {
+
+    if (bytes < 1024)
+        return bytes + " B";
+
+    if (bytes < 1024 * 1024)
+        return (bytes / 1024).toFixed(1) + " KB";
+
+    if (bytes < 1024 * 1024 * 1024)
+        return (bytes / 1024 / 1024).toFixed(1) + " MB";
+
+    return (bytes / 1024 / 1024 / 1024).toFixed(1) + " GB";
+}
+
+
+function formatarData(data) {
+
+    if (!data) {
+        return "";
+    }
+
+    return new Date(data)
+        .toLocaleString("pt-BR");
+}
+
+
+function escapar(texto) {
+
+    return String(texto)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
 </script>
 
 </body>
 </html>
-```
