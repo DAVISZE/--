@@ -1,0 +1,558 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagens dos Cultos</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        main {
+            width: min(1100px, 94%);
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px #0001;
+        }
+
+        .login {
+            max-width: 430px;
+            margin: 70px auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            margin: 8px 0 14px;
+            font-size: 16px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 13px 18px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .upload {
+            border: 2px dashed #9ca3af;
+            border-radius: 14px;
+            padding: 35px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .upload:hover {
+            border-color: #2563eb;
+            background: #f8fafc;
+        }
+
+        .upload input {
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #eef2ff;
+        }
+
+        .files {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .file {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .preview {
+            height: 160px;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 14px;
+        }
+
+        .name {
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .empty {
+            padding: 35px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📁 Imagens dos Cultos</h1>
+    <p>Fotos e vídeos</p>
+</header>
+
+<main>
+
+    <!-- LOGIN -->
+    <section id="login" class="card login">
+
+        <h2>🔐 Entrar</h2>
+
+        <p>Digite a senha para acessar os arquivos.</p>
+
+        <input
+            id="senha"
+            type="password"
+            placeholder="Senha"
+            autocomplete="off"
+        >
+
+        <button onclick="entrar()" style="width:100%;">
+            Entrar
+        </button>
+
+        <div id="loginStatus"></div>
+
+    </section>
+
+
+    <!-- PAINEL -->
+    <section id="painel" class="hidden">
+
+        <!-- UPLOAD -->
+        <div class="card">
+
+            <h2>📤 Enviar foto ou vídeo</h2>
+
+            <label class="upload">
+                <input
+                    id="arquivo"
+                    type="file"
+                    accept="image/*,video/*"
+                    onchange="selecionarArquivo()"
+                >
+
+                <strong>📷 Clique para escolher um arquivo</strong>
+
+                <div id="nomeArquivo">
+                    Nenhum arquivo selecionado
+                </div>
+            </label>
+
+            <button onclick="enviar()">
+                ☁️ Enviar
+            </button>
+
+            <div id="uploadStatus"></div>
+
+        </div>
+
+
+        <!-- LISTA -->
+        <div class="card">
+
+            <div class="top">
+                <div>
+                    <h2>📂 Imagens_Cultos</h2>
+                    <span id="contador">0 arquivos</span>
+                </div>
+
+                <button onclick="carregarArquivos()">
+                    🔄 Atualizar
+                </button>
+            </div>
+
+            <br>
+
+            <input
+                id="pesquisa"
+                type="text"
+                placeholder="🔎 Pesquisar arquivo..."
+                oninput="pesquisar()"
+            >
+
+            <div id="lista" class="files">
+                <div class="empty">
+                    Nenhum arquivo carregado.
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script type="module">
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+
+    // ==============================
+    // FIREBASE
+    // ==============================
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyDzJ81mwMCPzm3uTtBzdTp21HS6j7LeNTU",
+
+        authDomain:
+            "app1-c2a28.firebaseapp.com",
+
+        projectId:
+            "app1-c2a28",
+
+        storageBucket:
+            "app1-c2a28.firebasestorage.app",
+
+        messagingSenderId:
+            "1079561193142",
+
+        appId:
+            "1:1079561193142:web:863f4fb724509a23ae4817"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+
+    // ==============================
+    // LOGIN
+    // ==============================
+
+    window.entrar = function () {
+
+        const senha =
+            document.getElementById("senha").value;
+
+        const status =
+            document.getElementById("loginStatus");
+
+
+        /*
+         * A senha real NÃO deve ficar aqui.
+         *
+         * Depois vamos conectar:
+         *
+         * GitHub Pages
+         *       ↓
+         * Firebase
+         *       ↓
+         * validação segura
+         */
+
+
+        if (!senha) {
+
+            status.innerHTML =
+                "<div class='status'>Digite a senha.</div>";
+
+            return;
+        }
+
+
+        /*
+         * TEMPORÁRIO:
+         *
+         * Isso serve somente para testar a página.
+         *
+         * Trocaremos por autenticação segura.
+         */
+
+        if (senha === "1234") {
+
+            document
+                .getElementById("login")
+                .classList.add("hidden");
+
+            document
+                .getElementById("painel")
+                .classList.remove("hidden");
+
+            carregarArquivos();
+
+        } else {
+
+            status.innerHTML =
+                "<div class='status'>Senha incorreta.</div>";
+        }
+    };
+
+
+    // ==============================
+    // SELEÇÃO
+    // ==============================
+
+    window.selecionarArquivo = function () {
+
+        const input =
+            document.getElementById("arquivo");
+
+        const nome =
+            document.getElementById("nomeArquivo");
+
+
+        if (!input.files.length) {
+
+            nome.textContent =
+                "Nenhum arquivo selecionado";
+
+            return;
+        }
+
+
+        nome.textContent =
+            input.files[0].name;
+    };
+
+
+    // ==============================
+    // ENVIO
+    // ==============================
+
+    window.enviar = function () {
+
+        const input =
+            document.getElementById("arquivo");
+
+        const status =
+            document.getElementById("uploadStatus");
+
+
+        if (!input.files.length) {
+
+            status.innerHTML =
+                "<div class='status'>Escolha uma foto ou vídeo.</div>";
+
+            return;
+        }
+
+
+        const arquivo = input.files[0];
+
+
+        /*
+         * FLUXO REAL:
+         *
+         * 1. Receber arquivo
+         * 2. Mandar para o Google Drive
+         * 3. Pasta: Imagens_Cultos
+         * 4. Confirmar envio
+         * 5. Apagar cópia temporária
+         * 6. Atualizar lista
+         */
+
+
+        status.innerHTML = `
+            <div class="status">
+                ⏳ Preparando ${arquivo.name}...
+                <br><br>
+                A conexão com o Google Drive ainda será adicionada.
+            </div>
+        `;
+    };
+
+
+    // ==============================
+    // ARQUIVOS
+    // ==============================
+
+    let arquivos = [];
+
+
+    window.carregarArquivos = function () {
+
+        /*
+         * Aqui vamos consultar o Google Drive
+         * e obter os arquivos existentes
+         * dentro da pasta Imagens_Cultos.
+         */
+
+
+        arquivos = [];
+
+
+        mostrarArquivos();
+    };
+
+
+    function mostrarArquivos() {
+
+        const lista =
+            document.getElementById("lista");
+
+        const contador =
+            document.getElementById("contador");
+
+
+        contador.textContent =
+            `${arquivos.length} arquivos`;
+
+
+        if (!arquivos.length) {
+
+            lista.innerHTML = `
+                <div class="empty">
+                    📂 Nenhum arquivo encontrado.
+                    <br><br>
+                    A lista será preenchida pelo Google Drive.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        lista.innerHTML = "";
+
+
+        arquivos.forEach(arquivo => {
+
+            const item =
+                document.createElement("div");
+
+            item.className = "file";
+
+
+            item.innerHTML = `
+
+                <div class="preview">
+                    ${arquivo.tipo === "imagem"
+                        ? `<img src="${arquivo.url}">`
+                        : "🎥"
+                    }
+                </div>
+
+                <div class="info">
+
+                    <div class="name">
+                        ${arquivo.nome}
+                    </div>
+
+                </div>
+            `;
+
+
+            lista.appendChild(item);
+        });
+    }
+
+
+    // ==============================
+    // PESQUISA
+    // ==============================
+
+    window.pesquisar = function () {
+
+        const termo =
+            document
+                .getElementById("pesquisa")
+                .value
+                .toLowerCase();
+
+
+        const cards =
+            document.querySelectorAll(".file");
+
+
+        cards.forEach(card => {
+
+            const nome =
+                card
+                    .querySelector(".name")
+                    ?.textContent
+                    .toLowerCase() || "";
+
+
+            card.style.display =
+                nome.includes(termo)
+                    ? ""
+                    : "none";
+        });
+    };
+
+</script>
+
+</body>
+</html>
+```
